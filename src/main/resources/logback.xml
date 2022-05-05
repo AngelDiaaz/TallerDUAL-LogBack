@@ -1,0 +1,35 @@
+<configuration debug="true">
+	<!-- VARIABLE ASOCIADA A LA FECHA -->
+	<timestamp key="logDateVar" datePattern="dd-MM-yyyy" />
+	
+	<!-- ROLLINGFILEAPPENDER -->
+	<appender name="TuberiaT1"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		
+		<!-- NOMBRE DEL FICHERO EN EL QUE DESEMBOCA LA TUBERÍA -->
+		<file>C:\Users\adiaz\OneDrive\Escritorio\NTT DATA Practicas\WorkSpace\nttdatacenters-logback-t1-ada\log\logada-${logDateVar}.log</file>
+		
+		<!-- POLÍTICA CON LA QUE TROCEAMOS O GESTIONAMOS EL FICHERO -->
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>C:\Users\adiaz\OneDrive\Escritorio\NTT DATA Practicas\WorkSpace\nttdatacenters-logback-t1-ada\log\logada-${logDateVar}.%i.logDual.zip</fileNamePattern>
+		</rollingPolicy>
+
+		<!-- ¿CADA CUÁNTO DEBE SALTAR LA POLÍTICA DE TROCEADO? -->
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>50KB</maxFileSize>
+		</triggeringPolicy>
+		
+		<!-- ¿CÓMO QUIERO QUE SE PINTE LA INFORMACIÓN DEL FICHERO (TRAZA / LOG)? -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - [%method] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- LOGGER ROOT (CONFIGURADO AL NIVEL INFO SALE POR TUBERIA...)-->
+	<!-- EL NIVEL DETERMINA LO ESTRECHA QUE PUEDA SER LA TUBERÍA -->
+	<root level="trace">
+		<appender-ref ref="TuberiaT1" />
+	</root>
+</configuration>
